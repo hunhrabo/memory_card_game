@@ -1,13 +1,160 @@
-body {
+html {
+  max-height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Oxygen", sans-serif;
+  font-weight: normal;
+  font-size: 1em;
+  color: #f9fbf2;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0d253d;
+}
+
+.game-container .game {
+  display: grid;
+  gap: 10px 10px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.game-container .game-size-12 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 600px;
+  height: 450px;
+}
+
+.game-container .game-size-16 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: 600px;
+  height: 600px;
+}
+
+.game-container .game-size-24 {
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  width: 900px;
+  height: 600px;
+}
+
+.game-container .game .flip-card {
+  justify-self: center;
+  align-self: center;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.game-container .game .flip-card .flip-card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.game-container .game .flip-card .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.game-container .game .flip-card img {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* handle flips */
+.game .flip-card {
+  background-color: transparent;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  z-index: 400;
+  -webkit-transform: rotateX(0deg) rotateY(0deg);
+  -moz-transform: rotateX(0deg) rotateY(0deg);
+  -o-transform: rotateX(0deg) rotateY(0deg);
+  transform: rotateX(0deg) rotateY(0deg);
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /* background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; */
+  z-index: 300;
+}
+
+.flip-card.flipped .flip-card-front {
+  z-index: 300;
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.flip-card.flipped .flip-card-back {
+  z-index: 400;
+  -webkit-transform: rotateX(0deg) rotateY(0deg);
+  -moz-transform: rotateX(0deg) rotateY(0deg);
+  -o-transform: rotateX(0deg) rotateY(0deg);
+  transform: rotateX(0deg) rotateY(0deg);
+}
+
+.flip-card.found .flip-card-front {
+  z-index: 300;
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  transition: none;
+}
+
+.flip-card.found .flip-card-back {
+  z-index: 500;
+  -webkit-transform: rotateX(0deg) rotateY(0deg);
+  -moz-transform: rotateX(0deg) rotateY(0deg);
+  -o-transform: rotateX(0deg) rotateY(0deg);
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: all 0.4s ease-in-out;
 }
