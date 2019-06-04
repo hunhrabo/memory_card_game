@@ -15,24 +15,49 @@ const Game = ({ picUrls }) => {
     setCards(newCards);
   }, [picUrls]);
 
-  // if there are 2 flipped cards and they are different
   useEffect(() => {
+    console.log(cards);
     const flippedCards = cards.filter(card => card.state === "flipped");
-    if (flippedCards.length >= 2) {
-      setTimeout(() => {
-        setCards(
-          cards.map(card => {
-            if (flippedCards.find(flippedCard => flippedCard.id === card.id)) {
-              return {
-                ...card,
-                state: ""
-              };
-            } else {
+    console.log(flippedCards);
+    // check if there are exactly two actively flipped cards
+    if (flippedCards.length === 2) {
+      // if they both point to the same url
+      if (flippedCards[0].url === flippedCards[1].url) {
+        setTimeout(() => {
+          flippedCards[0].state = "found";
+          flippedCards[1].state = "found";
+
+          setCards(
+            cards.map(card => {
+              if (card.id === flippedCards[0].id) {
+                return flippedCards[0];
+              } else if (card.id === flippedCards[1].id) {
+                return flippedCards[1];
+              }
               return card;
-            }
-          })
-        );
-      }, 2000);
+            })
+          );
+        }, 1000);
+
+        // if they point to different urls
+      } else {
+        setTimeout(() => {
+          setCards(
+            cards.map(card => {
+              if (
+                flippedCards.find(flippedCard => flippedCard.id === card.id)
+              ) {
+                return {
+                  ...card,
+                  state: ""
+                };
+              } else {
+                return card;
+              }
+            })
+          );
+        }, 2000);
+      }
     }
   }, [cards]);
 
@@ -46,47 +71,18 @@ const Game = ({ picUrls }) => {
       card => card.id === Number(currentTarget.id)
     );
 
-    // if clicked card is not flipped
+    // if clicked card is not flipped or found
     if (currentCard.state === "") {
       const flippedCards = cards.filter(card => card.state === "flipped");
 
       // if there are less than 2 actively flipped cards
       if (flippedCards.length < 2) {
-        // if there are no active flipped cards
-        if (flippedCards.length === 0) {
-          currentCard.state = "flipped";
-          setCards(
-            cards.map(card => {
-              return card.id === currentCard.id ? currentCard : card;
-            })
-          );
-
-          // if there is another flipped card then compare it with currently clicked card
-        } else if (flippedCards.length === 1) {
-          currentCard.state = "flipped";
-          // if they point to the same url
-          if (flippedCards[0].url === currentCard.url) {
-            flippedCards[0].state = "found";
-            currentCard.state = "found";
-            setCards(
-              cards.map(card => {
-                if (card.id === flippedCards[0].id) {
-                  return flippedCards[0];
-                } else if (card.id === currentCard.id) {
-                  return currentCard;
-                }
-                return card;
-              })
-            );
-            // if they are different
-          } else {
-            setCards(
-              cards.map(card => {
-                return card.id === currentCard.id ? currentCard : card;
-              })
-            );
-          }
-        }
+        currentCard.state = "flipped";
+        setCards(
+          cards.map(card => {
+            return card.id === currentCard.id ? currentCard : card;
+          })
+        );
       }
     }
   };
