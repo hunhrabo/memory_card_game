@@ -1,9 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Tile from "./Tile";
 
-const Game = ({ picUrls }) => {
+const Game = ({ selectedGame }) => {
+  const [picUrls, setPicUrls] = useState([]);
   const [cards, setCards] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
+
+  const baseUrl = "https://picsum.photos/200/200?random=";
+
+  useEffect(() => {
+    const newPicUrls = fetchUrls(baseUrl, selectedGame);
+    setPicUrls(shuffleArray(newPicUrls));
+  }, [selectedGame]);
+
+  const shuffleArray = array => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const fetchUrls = (url, num) => {
+    let newPicUrls = [];
+    for (let i = 0; i < num; i++) {
+      newPicUrls.push(`${url}${i + 1}`);
+      newPicUrls.push(`${url}${i + 1}`);
+    }
+    return newPicUrls;
+  };
 
   useEffect(() => {
     const newCards = picUrls.map((url, index) => {
@@ -68,6 +93,8 @@ const Game = ({ picUrls }) => {
     // when render check if all the pairs are found
     if (cards.length > 0 && cards.length === foundCards.length) {
       setIsFinished(true);
+    } else {
+      setIsFinished(false);
     }
   }, [cards]);
 
@@ -120,29 +147,31 @@ const Game = ({ picUrls }) => {
     }
   };
 
-  if (cards.length > 0) {
-    const gameStateClass = isFinished ? "finished" : "";
-    return (
-      <div className={`game game-size-${cards.length} ${gameStateClass}`}>
-        {cards.map(card => {
-          return (
-            <Tile
-              key={card.id}
-              id={card.id}
-              url={card.url}
-              cardState={card.state}
-              handleCardClick={handleCardClick}
-            />
-          );
-        })}
-        <div className="congrat">
-          <h1>Congratulations!</h1>
-        </div>
+  const gameStateClass = isFinished ? "finished" : "";
+  return (
+    <div className={`game game-size-${cards.length} ${gameStateClass}`}>
+      {cards.map(card => {
+        return (
+          <Tile
+            key={card.id}
+            id={card.id}
+            url={card.url}
+            cardState={card.state}
+            handleCardClick={handleCardClick}
+          />
+        );
+      })}
+      <div className="congrat">
+        <h1>Congratulations!</h1>
       </div>
-    );
-  } else {
-    return null;
-  }
+    </div>
+  );
+
+  // if (cards.length > 0) {
+
+  // } else {
+  //   return null;
+  // }
 };
 
 export default Game;

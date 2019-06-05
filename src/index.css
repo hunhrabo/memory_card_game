@@ -85,6 +85,14 @@ body {
   border-radius: 5px;
   background-color: rgba(220, 200, 200, 0.7);
   box-shadow: 5px 5px 10px rgb(134, 124, 124);
+  -webkit-transition: opacity 600ms, visibility 600ms;
+  transition: opacity 600ms, visibility 600ms;
+}
+
+.game-container .game-size-0 {
+  opacity: 0;
+  visibility: hidden;
+  display: none;
 }
 
 .game-container .game-size-12 {
@@ -92,6 +100,8 @@ body {
   grid-template-rows: repeat(3, 1fr);
   width: 600px;
   height: 450px;
+  opacity: 1;
+  visibility: visible;
 }
 
 .game-container .game-size-16 {
