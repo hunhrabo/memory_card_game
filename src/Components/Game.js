@@ -3,6 +3,7 @@ import Tile from "./Tile";
 
 const Game = ({ picUrls }) => {
   const [cards, setCards] = useState([]);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     const newCards = picUrls.map((url, index) => {
@@ -16,9 +17,10 @@ const Game = ({ picUrls }) => {
   }, [picUrls]);
 
   useEffect(() => {
-    console.log(cards);
     const flippedCards = cards.filter(card => card.state === "flipped");
-    console.log(flippedCards);
+    // const foundCards = cards.filter(card => card.state === "found");
+    // console.log(cards.length, foundCards.length);
+
     // check if there are exactly two actively flipped cards
     if (flippedCards.length === 2) {
       // if they both point to the same url
@@ -61,6 +63,14 @@ const Game = ({ picUrls }) => {
     }
   }, [cards]);
 
+  useEffect(() => {
+    const foundCards = cards.filter(card => card.state === "found");
+    // when render check if all the pairs are found
+    if (cards.length > 0 && cards.length === foundCards.length) {
+      setIsFinished(true);
+    }
+  }, [cards]);
+
   const handleCardClick = e => {
     console.log(e.currentTarget.id);
     // flip-card div
@@ -84,12 +94,36 @@ const Game = ({ picUrls }) => {
           })
         );
       }
+      // for fast clicking - doesn't work as intended
+      // else if (
+      //   flippedCards[0].url !== flippedCards[1].url &&
+      //   flippedCards.length === 2
+      // ) {
+      //   currentCard.state = "flipped";
+      //   flippedCards[0].state = "";
+      //   flippedCards[1].state = "";
+
+      //   setCards(
+      //     cards.map(card => {
+      //       if (card.id === currentCard) {
+      //         return currentCard;
+      //       } else if (card.id === flippedCards[0].id) {
+      //         return flippedCards[0];
+      //       } else if (card.id === flippedCards[1].id) {
+      //         return flippedCards[1];
+      //       } else {
+      //         return card;
+      //       }
+      //     })
+      //   );
+      // }
     }
   };
 
   if (cards.length > 0) {
+    const gameStateClass = isFinished ? "finished" : "";
     return (
-      <div className={`game game-size-${cards.length}`}>
+      <div className={`game game-size-${cards.length} ${gameStateClass}`}>
         {cards.map(card => {
           return (
             <Tile
@@ -101,6 +135,9 @@ const Game = ({ picUrls }) => {
             />
           );
         })}
+        <div className="congrat">
+          <h1>Congratulations!</h1>
+        </div>
       </div>
     );
   } else {

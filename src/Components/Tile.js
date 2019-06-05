@@ -8,7 +8,9 @@ const Tile = ({ id, url, cardState, handleCardClick }) => {
       onClick={handleCardClick}
     >
       <div className="flip-card-front">
-        <img src="question-mark.svg" alt="question-mark" />
+        <span>
+          <i className="fas fa-question" />
+        </span>
       </div>
       <div className="flip-card-back">
         <img src={`${url}`} alt="tile" />
