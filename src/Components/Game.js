@@ -8,6 +8,7 @@ const Game = ({ selectedGame }) => {
 
   const baseUrl = "https://picsum.photos/200/200?random=";
 
+  // fetch urls for pictures
   useEffect(() => {
     const newPicUrls = fetchUrls(baseUrl, selectedGame);
     setPicUrls(shuffleArray(newPicUrls));
@@ -30,6 +31,7 @@ const Game = ({ selectedGame }) => {
     return newPicUrls;
   };
 
+  // create cards from urls
   useEffect(() => {
     const newCards = picUrls.map((url, index) => {
       return {
@@ -41,10 +43,9 @@ const Game = ({ selectedGame }) => {
     setCards(newCards);
   }, [picUrls]);
 
+  // handle flip
   useEffect(() => {
     const flippedCards = cards.filter(card => card.state === "flipped");
-    // const foundCards = cards.filter(card => card.state === "found");
-    // console.log(cards.length, foundCards.length);
 
     // check if there are exactly two actively flipped cards
     if (flippedCards.length === 2) {
@@ -121,33 +122,11 @@ const Game = ({ selectedGame }) => {
           })
         );
       }
-      // for fast clicking - doesn't work as intended
-      // else if (
-      //   flippedCards[0].url !== flippedCards[1].url &&
-      //   flippedCards.length === 2
-      // ) {
-      //   currentCard.state = "flipped";
-      //   flippedCards[0].state = "";
-      //   flippedCards[1].state = "";
-
-      //   setCards(
-      //     cards.map(card => {
-      //       if (card.id === currentCard) {
-      //         return currentCard;
-      //       } else if (card.id === flippedCards[0].id) {
-      //         return flippedCards[0];
-      //       } else if (card.id === flippedCards[1].id) {
-      //         return flippedCards[1];
-      //       } else {
-      //         return card;
-      //       }
-      //     })
-      //   );
-      // }
     }
   };
 
   const gameStateClass = isFinished ? "finished" : "";
+
   return (
     <div className={`game game-size-${cards.length} ${gameStateClass}`}>
       {cards.map(card => {
@@ -166,12 +145,6 @@ const Game = ({ selectedGame }) => {
       </div>
     </div>
   );
-
-  // if (cards.length > 0) {
-
-  // } else {
-  //   return null;
-  // }
 };
 
 export default Game;
