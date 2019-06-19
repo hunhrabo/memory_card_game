@@ -84,7 +84,7 @@ body {
   gap: 10px 10px;
   width: 80%;
   margin: 0 auto;
-  padding: 0;
+  padding: 5px;
   background-color: transparent;
   -webkit-transition-property: opacity;
   -webkit-transition-duration: 600ms;
@@ -263,15 +263,15 @@ body {
 }
 
 .game .congrat {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   margin: 0;
   padding: 0;
   background: rgba(241, 241, 242, 0.9);
-  border-radius: 15px;
+  /* border-radius: 15px; */
   opacity: 0;
   visibility: hidden;
   -webkit-transition: opacity 600ms;
