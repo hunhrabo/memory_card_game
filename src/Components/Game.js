@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ImageServices from "../Services/services";
 import Tile from "./Tile";
 
 const Game = ({ selectedGame }) => {
@@ -6,13 +7,19 @@ const Game = ({ selectedGame }) => {
   const [cards, setCards] = useState([]);
   const [isFinished, setIsFinished] = useState(false);
 
-  const baseUrl = "https://picsum.photos/200/200?random=";
+  useEffect(() => {
+    const imageUrls = ImageServices.getAll(selectedGame);
+    console.log(imageUrls);
+    setPicUrls(shuffleArray(imageUrls));
+  }, [selectedGame]);
+
+  // const baseUrl = "https://picsum.photos/200/200?random=";
 
   // fetch urls for pictures
-  useEffect(() => {
-    const newPicUrls = fetchUrls(baseUrl, selectedGame);
-    setPicUrls(shuffleArray(newPicUrls));
-  }, [selectedGame]);
+  // useEffect(() => {
+  //   const newPicUrls = fetchUrls(baseUrl, selectedGame);
+  //   setPicUrls(shuffleArray(newPicUrls));
+  // }, [selectedGame]);
 
   const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -22,14 +29,14 @@ const Game = ({ selectedGame }) => {
     return array;
   };
 
-  const fetchUrls = (url, num) => {
-    let newPicUrls = [];
-    for (let i = 0; i < num; i++) {
-      newPicUrls.push(`${url}${i + 1}`);
-      newPicUrls.push(`${url}${i + 1}`);
-    }
-    return newPicUrls;
-  };
+  // const fetchUrls = (url, num) => {
+  //   let newPicUrls = [];
+  //   for (let i = 0; i < num; i++) {
+  //     newPicUrls.push(`${url}${i + 1}`);
+  //     newPicUrls.push(`${url}${i + 1}`);
+  //   }
+  //   return newPicUrls;
+  // };
 
   // create cards from urls
   useEffect(() => {
@@ -100,7 +107,7 @@ const Game = ({ selectedGame }) => {
   }, [cards]);
 
   const handleCardClick = e => {
-    console.log(e.currentTarget.id);
+    // console.log(e.currentTarget.id);
     // flip-card div
     const currentTarget = e.currentTarget;
 
