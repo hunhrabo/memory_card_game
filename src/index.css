@@ -69,8 +69,13 @@ body {
 }
 
 .game-container .select-game.select-closed {
-  margin: 0 auto 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   text-align: center;
+  z-index: 600;
 }
 
 .game-container .select-game.select-closed button {
@@ -83,7 +88,7 @@ body {
   display: grid;
   gap: 10px 10px;
   width: 80%;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 5px;
   background-color: transparent;
   -webkit-transition-property: opacity;

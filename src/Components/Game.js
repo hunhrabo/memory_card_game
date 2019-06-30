@@ -9,7 +9,7 @@ const Game = ({ selectedGame }) => {
 
   useEffect(() => {
     const imageUrls = ImageServices.getAll(selectedGame);
-    console.log(imageUrls);
+    // console.log(imageUrls);
     setPicUrls(shuffleArray(imageUrls));
   }, [selectedGame]);
 
