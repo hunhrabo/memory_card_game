@@ -148,7 +148,9 @@ const Game = ({ selectedGame }) => {
         );
       })}
       <div className="congrat">
-        <h1>Congratulations!</h1>
+        <div className="congrat-text-container">
+          <h1>Congratulations!</h1>
+        </div>
       </div>
     </div>
   );

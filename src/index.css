@@ -69,7 +69,7 @@ body {
 }
 
 .game-container .select-game.select-closed {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -269,10 +269,11 @@ body {
 
 .game .congrat {
   position: fixed;
+  display: table;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   background: rgba(241, 241, 242, 0.9);
@@ -289,13 +290,20 @@ body {
   color: rgb(118, 118, 118);
 }
 
-.game.finished .congrat h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+.game.finished .congrat .congrat-text-container {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
   margin: 0;
   padding: 0;
-  transform: translate(-50%, -50%);
+}
+
+.game.finished .congrat .congrat-text-container h1 {
+  /* position: absolute;
+  top: 50%;
+  left: 50%; */
+
+  /* transform: translate(-50%, -50%); */
   font-weight: 300;
   font-size: 3rem;
 }
